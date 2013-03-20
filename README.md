@@ -31,6 +31,18 @@ and template.hbs:
 <h1>Hello {{name}}!</h1>
 ```
 
+### Helpers
+
+To register custom helpers just require the runtime and call the registerHelper
+function:
+
+```javascript
+var Handlebars = require("handlebars-runtime");
+Handlebars.registerHelper("upcase", function(s) {
+  return s.toUpperCase();
+});
+```
+
 [Handlebars]: http://handlebarsjs.com/
 [Browserify v2]: https://github.com/substack/node-browserify
 [handlebars-runtime]: https://npmjs.org/package/handlebars-runtime
