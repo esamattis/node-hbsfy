@@ -1,0 +1,34 @@
+{
+  "name": "hbsfy",
+  "version": "0.1.0",
+  "description": "Handlebars precompiler plugin for Browserify v2",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/epeli/node-hbsfy"
+  },
+  "keywords": [
+    "handlebars",
+    "browserify",
+    "v2",
+    "js",
+    "plugin",
+    "transform"
+  ],
+  "author": "Esa-Matti Suuronen",
+  "license": "MIT",
+  "dependencies": {
+    "through": "~2.2.7",
+    "handlebars": "~1.0.10"
+  },
+  "peerDependencies": {
+    "handlebars-runtime": "~1.0.0"
+  },
+  "devDependencies": {
+    "browserify": "~2.4.0",
+    "handlebars-runtime": "~1.0.0"
+  }
+}
