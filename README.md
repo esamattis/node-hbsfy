@@ -4,7 +4,7 @@
 [Handlebars][] precompiler plugin for [Browserify v2][].
 
 Compiles Handlebars templates to plain Javascript. The compiled templates
-depend only on [handlebars-runtime][] so they are lightweight fast!
+depend only on [handlebars-runtime][] so they are lightweight and fast!
 
 ## Usage
 
