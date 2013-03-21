@@ -1,4 +1,3 @@
-
 # hbsfy
 
 [Handlebars][] precompiler plugin for [Browserify v2][].
@@ -42,6 +41,12 @@ Handlebars.registerHelper("upcase", function(s) {
   return s.toUpperCase();
 });
 ```
+
+## Browserify??
+
+<https://github.com/substack/node-browserify>
+
+For RequireJS users read this: <http://esa-matti.suuronen.org/blog/2013/03/22/journey-from-requirejs-to-browserify/>
 
 [Handlebars]: http://handlebarsjs.com/
 [Browserify v2]: https://github.com/substack/node-browserify
