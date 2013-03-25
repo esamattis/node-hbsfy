@@ -42,11 +42,11 @@ Handlebars.registerHelper("upcase", function(s) {
 });
 ```
 
-## Browserify??
+## Browserify?
 
 <https://github.com/substack/node-browserify>
 
-For RequireJS users read this: <http://esa-matti.suuronen.org/blog/2013/03/22/journey-from-requirejs-to-browserify/>
+Further reading: <http://esa-matti.suuronen.org/blog/2013/03/22/journey-from-requirejs-to-browserify/>
 
 [Handlebars]: http://handlebarsjs.com/
 [Browserify v2]: https://github.com/substack/node-browserify
