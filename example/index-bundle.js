@@ -3,15 +3,27 @@
 var Handlebars = require("handlebars-runtime");
 var template = require("./template.hbs");
 
-Handlebars.registerHelper("upcase", function(s) {
-  return s.toUpperCase();
+Handlebars.registerPartial('link', require("./partial.hbs"));
+
+Handlebars.registerHelper("capitalize", function(name) {
+  return name[0].toUpperCase() + name.slice(1);
 });
 
-window.onload = function() {
-  document.body.innerHTML = template({ msg: "hello" });
-}
 
-},{"./template.hbs":2,"handlebars-runtime":3}],3:[function(require,module,exports){
+var data = {
+  name: "esa",
+  links: [
+    { name: "Blog", url: "http://esa-matti.suuronen.org/" },
+    { name: "Twitter", url: "https://twitter.com/esamatti" },
+    { name: "Github", url: "https://github.com/epeli" }
+  ]
+};
+
+window.onload = function() {
+  document.body.innerHTML = template(data);
+};
+
+},{"./template.hbs":2,"./partial.hbs":3,"handlebars-runtime":4}],4:[function(require,module,exports){
 /*
 
 Copyright (C) 2011 by Yehuda Katz
@@ -330,20 +342,55 @@ Handlebars.template = Handlebars.VM.template;
 })(Handlebars);
 ;
 
-},{}],2:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 var Handlebars = require('handlebars-runtime');
 module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [2,'>= 1.0.0-rc.3'];
 helpers = helpers || Handlebars.helpers; data = data || {};
-  var buffer = "", stack1, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
+  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
 
 
-  buffer += "<h1>";
-  options = {hash:{},data:data};
-  buffer += escapeExpression(((stack1 = helpers.upcase),stack1 ? stack1.call(depth0, depth0.msg, options) : helperMissing.call(depth0, "upcase", depth0.msg, options)))
-    + "</h1>\n";
+  buffer += "<a href=\"";
+  if (stack1 = helpers.url) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.url; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\">";
+  if (stack1 = helpers.name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.name; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "</a>\n";
   return buffer;
   });
 
-},{"handlebars-runtime":3}]},{},[1])
+},{"handlebars-runtime":4}],2:[function(require,module,exports){
+var Handlebars = require('handlebars-runtime');
+module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [2,'>= 1.0.0-rc.3'];
+helpers = helpers || Handlebars.helpers; partials = partials || Handlebars.partials; data = data || {};
+  var buffer = "", stack1, stack2, options, self=this, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, functionType="function", blockHelperMissing=helpers.blockHelperMissing;
+
+function program1(depth0,data) {
+  
+  var buffer = "", stack1;
+  buffer += "<li>";
+  stack1 = self.invokePartial(partials.link, 'link', depth0, helpers, partials, data);
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "</li>";
+  return buffer;
+  }
+
+  buffer += "<h1>Hello, I'm ";
+  options = {hash:{},data:data};
+  buffer += escapeExpression(((stack1 = helpers.capitalize),stack1 ? stack1.call(depth0, depth0.name, options) : helperMissing.call(depth0, "capitalize", depth0.name, options)))
+    + "</h1>\n<p>My links are:</p>\n<ul>";
+  options = {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data};
+  if (stack2 = helpers.links) { stack2 = stack2.call(depth0, options); }
+  else { stack2 = depth0.links; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+  if (!helpers.links) { stack2 = blockHelperMissing.call(depth0, stack2, options); }
+  if(stack2 || stack2 === 0) { buffer += stack2; }
+  buffer += "</ul>\n";
+  return buffer;
+  });
+
+},{"handlebars-runtime":4}]},{},[1])
 ;
