@@ -32,8 +32,8 @@ and template.hbs:
 
 ### Helpers
 
-To register custom helpers just require the runtime and call the registerHelper
-function:
+To register custom helpers just require the runtime use and `registerHelper` to
+create helper:
 
 ```javascript
 var Handlebars = require("handlebars-runtime");
@@ -41,6 +41,17 @@ Handlebars.registerHelper("upcase", function(s) {
   return s.toUpperCase();
 });
 ```
+
+### Partials
+
+Partials can be created by giving precompiled template to the `registerPartial`
+function.
+
+```javascript
+Handlebars.registerPartial('link', require("./partial.hbs"));
+```
+
+Checkout the example folder for details.
 
 ## Browserify?
 
