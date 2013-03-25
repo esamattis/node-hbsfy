@@ -1,0 +1,11 @@
+{
+  "name": "example",
+  "version": "0.0.0",
+  "repository": "",
+  "author": "",
+  "dependencies": {
+    "handlebars-runtime": "~1.0.0",
+    "hbsfy": "~0.1.1",
+    "browserify": "~2.7.3"
+  }
+}
