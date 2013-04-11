@@ -1,6 +1,8 @@
+[![Build Status](https://travis-ci.org/epeli/node-hbsfy.png?branch=master)](https://travis-ci.org/epeli/node-hbsfy)
+
 # hbsfy
 
-[Handlebars][] precompiler plugin for [Browserify v2][].
+[Handlebars][] precompiler plugin for [Browserify v2][] without magic.
 
 Compiles Handlebars templates to plain Javascript. The compiled templates
 depend only on [handlebars-runtime][] so they are lightweight and fast!
