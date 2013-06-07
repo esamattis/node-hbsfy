@@ -25,7 +25,7 @@
     "handlebars": "~1.0.12"
   },
   "peerDependencies": {
-    "handlebars-runtime": "~1.0.0"
+    "handlebars-runtime": "~1.0.12"
   },
   "devDependencies": {
     "browserify": "~2.4.0",
