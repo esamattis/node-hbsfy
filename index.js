@@ -4,7 +4,7 @@ var through = require('through');
 var Handlebars = require("handlebars");
 
 module.exports = function(file) {
-  if (!/\.hbs/.test(file)) return through();
+  if (!/\.hbs|\.handlebars/.test(file)) return through();
 
   var buffer = "";
 
