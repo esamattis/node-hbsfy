@@ -83,11 +83,6 @@ Checkout the example folder for details.
     - Thanks to @kamicane for teaching me how to do this.
   - Option to configure template extensions
 
-## Browserify?
-
-<https://github.com/substack/node-browserify>
-
-Further reading: <http://esa-matti.suuronen.org/blog/2013/03/22/journey-from-requirejs-to-browserify/>
 
 [Handlebars]: http://handlebarsjs.com/
 [Browserify v2]: https://github.com/substack/node-browserify
