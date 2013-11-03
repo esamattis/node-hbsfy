@@ -46,7 +46,7 @@ var hbsfy = require("hbsfy").configure({
 var browserify = require("browserify");
 var b = browserify("./index.js");
 b.transform(hbsfy);
-b.bundle().pipe(fs.createWriteStream("./bundle.js");
+b.bundle().pipe(fs.createWriteStream("./bundle.js"));
 ```
 
 ### Helpers
