@@ -59,8 +59,8 @@ Checkout the example folder for details.
 
 ### 1.0.0
 
-  - Remove `handlebars-runtime` dependency and dependency directly on
-    `handlebars` module as [peer dependency][].
+  - Remove `handlebars-runtime` dependency and depend directly on
+    `handlebars` module as a [peer dependency][].
   - Runtime must be now required with `require("hbsfy/runtime")` instead of
     `require("handlebars-runtime")`.
   - Thanks to @kamicane for teaching me how to do this.
