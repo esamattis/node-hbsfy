@@ -7,5 +7,3 @@ hbsUtils.attach(Handlebars);
 hbsRuntime.attach(Handlebars);
 
 module.exports = Handlebars;
-
-// module.exports = require("handlebars");
