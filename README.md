@@ -21,6 +21,7 @@ Then use it as Browserify transform module with `-t`:
 
 where main.js can be like:
 
+
 ```javascript
 var template = require("./template.hbs");
 document.body.innerHTML = template({ name: "Epeli" });
@@ -30,6 +31,22 @@ and template.hbs:
 
 ```html
 <h1>Hello {{name}}!</h1>
+```
+
+## Programmatic usage
+
+When compiling using Javascript code custom extensions
+can be set:
+
+```javascript
+var hbsfy = require("hbsfy").configure({
+  extensions: ["html"]
+});
+
+var browserify = require("browserify");
+var b = browserify("./index.js");
+b.transform(hbsfy);
+b.bundle().pipe(fs.createWriteStream("./bundle.js");
 ```
 
 ### Helpers
@@ -60,10 +77,11 @@ Checkout the example folder for details.
 ### 1.0.0
 
   - Remove `handlebars-runtime` dependency and depend directly on
-    `handlebars` module as a [peer dependency][].
-  - Runtime must be now required with `require("hbsfy/runtime")` instead of
-    `require("handlebars-runtime")`.
-  - Thanks to @kamicane for teaching me how to do this.
+    the `handlebars` module as a [peer dependency][].
+    - Runtime must be now required with `require("hbsfy/runtime")` instead of
+      `require("handlebars-runtime")`.
+    - Thanks to @kamicane for teaching me how to do this.
+  - Option to configure template extensions
 
 ## Browserify?
 
