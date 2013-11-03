@@ -3,8 +3,8 @@
 var fs = require("fs");
 var assert = require("assert");
 
-var hbsfy = require("../index");
-var Handlebars = require("handlebars-runtime");
+var hbsfy = require("hbsfy");
+var Handlebars = require("hbsfy/runtime");
 
 Handlebars.registerHelper("upcase", function(s) {
   return s.toUpperCase();

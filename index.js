@@ -14,7 +14,7 @@ module.exports = function(file) {
   function() {
     var js = Handlebars.precompile(buffer);
     // Compile only with the runtime dependency.
-    var compiled = "var Handlebars = require('handlebars-runtime');\n";
+    var compiled = "var Handlebars = require('hbsfy/runtime');\n";
     compiled += "module.exports = Handlebars.template(" + js.toString() + ");\n";
     this.queue(compiled);
     this.queue(null);

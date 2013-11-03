@@ -4,8 +4,8 @@
 
 [Handlebars][] precompiler plugin for [Browserify v2][] without magic.
 
-Compiles Handlebars templates to plain Javascript. The compiled templates
-depend only on [handlebars-runtime][] so they are lightweight and fast!
+Compiles Handlebars templates to plain Javascript. The compiled templates only
+have one copy of the Handlebars runtime so they are lightweight and fast!
 
 ## Usage
 
@@ -13,7 +13,7 @@ Install hbsfy locally to your project:
 
     npm install hbsfy
 
-Handlebars runtime will be automatically installed as [peer dependency][].
+Handlebars will be automatically installed as [peer dependency][].
 
 Then use it as Browserify transform module with `-t`:
 
@@ -38,7 +38,7 @@ To register custom helpers just require the runtime use and `registerHelper` to
 create helper:
 
 ```javascript
-var Handlebars = require("handlebars-runtime");
+var Handlebars = require("hbsfy/runtime");
 Handlebars.registerHelper("upcase", function(s) {
   return s.toUpperCase();
 });
@@ -55,6 +55,16 @@ Handlebars.registerPartial('link', require("./partial.hbs"));
 
 Checkout the example folder for details.
 
+## Changelog
+
+### 1.0.0
+
+  - Remove `handlebars-runtime` dependency and dependency directly on
+    `handlebars` module as [peer dependency][].
+  - Runtime must be now required with `require("hbsfy/runtime")` instead of
+    `require("handlebars-runtime")`.
+  - Thanks to @kamicane for teaching me how to do this.
+
 ## Browserify?
 
 <https://github.com/substack/node-browserify>
@@ -63,5 +73,4 @@ Further reading: <http://esa-matti.suuronen.org/blog/2013/03/22/journey-from-req
 
 [Handlebars]: http://handlebarsjs.com/
 [Browserify v2]: https://github.com/substack/node-browserify
-[handlebars-runtime]: https://npmjs.org/package/handlebars-runtime
 [peer dependency]: http://blog.nodejs.org/2013/02/07/peer-dependencies/
