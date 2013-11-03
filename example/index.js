@@ -1,5 +1,5 @@
 
-var Handlebars = require("handlebars-runtime");
+var Handlebars = require("hbsfy/runtime");
 var template = require("./template.hbs");
 
 Handlebars.registerPartial('link', require("./partial.hbs"));
