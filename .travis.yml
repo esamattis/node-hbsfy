@@ -3,7 +3,7 @@ before_script:
   # Tests require that hbsfy is requireable by its name. We cannot use relative
   # require calls because 'require("hbsfy/runtime");' will be compiled in to
   # the browserify bundles.
-  - sudo npm link
+  - sudo $(which npm) link
 node_js:
   - "0.8"
   - "0.10"
