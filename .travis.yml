@@ -4,6 +4,8 @@ before_script:
   # require calls because 'require("hbsfy/runtime");' will be compiled in to
   # the browserify bundles.
   - sudo $(which npm) link
+  # Install the handlebars peer dependency
+  - npm instal handlebars
 node_js:
   - "0.8"
   - "0.10"
