@@ -24,7 +24,7 @@
     "through": "~2.2.7"
   },
   "peerDependencies": {
-    "handlebars": "~1.0.12"
+    "handlebars": "~1.2.0"
   },
   "devDependencies": {
     "browserify": "~2.35.1",
