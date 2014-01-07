@@ -1,1 +1,1 @@
-module.exports = require("handlebars/runtime");
+module.exports = require("handlebars/runtime")["default"];
