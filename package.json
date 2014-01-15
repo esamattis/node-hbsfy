@@ -21,13 +21,13 @@
   "author": "Esa-Matti Suuronen",
   "license": "MIT",
   "dependencies": {
-    "through": "~2.2.7"
+    "through": "~2.3.4"
   },
   "peerDependencies": {
     "handlebars": "~1.3.0"
   },
   "devDependencies": {
-    "browserify": "~2.35.1",
-    "concat-stream": "~1.1.0"
+    "browserify": "~3.20.0",
+    "concat-stream": "~1.4.1"
   }
 }
