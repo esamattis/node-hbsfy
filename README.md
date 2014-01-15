@@ -90,6 +90,11 @@ gulp.task('js', function() {
 
 ## Changelog
 
+### 1.3.0
+
+  - Support Handlebars 1.3
+  - Now uses the official runtime api
+
 ### 1.0.0
 
   - Remove `handlebars-runtime` dependency and depend directly on
