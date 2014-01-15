@@ -1,6 +1,6 @@
 {
   "name": "hbsfy",
-  "version": "1.0.0",
+  "version": "1.3.0",
   "description": "Handlebars precompiler plugin for Browserify v2",
   "main": "index.js",
   "scripts": {
