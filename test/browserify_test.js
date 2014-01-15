@@ -16,7 +16,7 @@ var context = {
 
 b.bundle().pipe(concat(function(data) {
     console.log("Bundle size", data.length);
-    assert(data.length < 15000, "Bundle is too big! Maybe full Handlebars got compiled in?");
+    assert(data.length < 20000, "Bundle is too big! Maybe full Handlebars got compiled in?");
     vm.runInNewContext(data.toString(), context);
 }));
 
