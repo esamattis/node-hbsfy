@@ -16,7 +16,8 @@
     "v2",
     "js",
     "plugin",
-    "transform"
+    "transform",
+    "browserify-transform"
   ],
   "author": "Esa-Matti Suuronen",
   "license": "MIT",
