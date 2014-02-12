@@ -5,7 +5,7 @@ before_script:
   # the browserify bundles.
   - sudo $(which npm) link
   # Install the handlebars peer dependency
-  - npm instal handlebars
+  - npm instal handlebars@1
 node_js:
   - "0.8"
   - "0.10"
