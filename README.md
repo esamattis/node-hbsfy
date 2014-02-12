@@ -106,7 +106,7 @@ gulp.task('js', function() {
 
 
 [Handlebars]: http://handlebarsjs.com/
-[Browserify v2]: https://github.com/substack/node-browserify
+[Browserify]: https://github.com/substack/node-browserify
 [peer dependency]: http://blog.nodejs.org/2013/02/07/peer-dependencies/
 [gulp]: http://gulpjs.com/
 [gulp-browserify]: https://github.com/deepak1556/gulp-browserify
