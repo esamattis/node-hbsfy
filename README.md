@@ -2,7 +2,7 @@
 
 # hbsfy
 
-[Handlebars][] precompiler plugin for [Browserify v2][] without magic.
+[Handlebars][] precompiler plugin for [Browserify][] without magic.
 
 Compiles Handlebars templates to plain Javascript. The compiled templates only
 have one copy of the Handlebars runtime so they are lightweight and fast!
