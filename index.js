@@ -5,7 +5,8 @@ var Handlebars = require("handlebars");
 
 var extensions = {
   hbs: 1,
-  handlebar: 1
+  handlebar: 1,
+  handlebars: 1
 };
 
 function hbsfy(file) {
