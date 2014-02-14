@@ -94,6 +94,8 @@ gulp.task('js', function() {
 
   - Support Handlebars 1.3
   - Now uses the official runtime api
+    - Use `var Handlebars = require("hbsfy/runtime");`
+    - `handlebars-runtime` package is now deprecated!
 
 ### 1.0.0
 
