@@ -72,21 +72,6 @@ Handlebars.registerPartial('link', require("./partial.hbs"));
 
 Checkout the example folder for details.
 
-### Use in gulp
-
-You can easily use hbsfy in [gulp][] with [gulp-browserify][]:
-
-```javascript
-gulp.task('js', function() {
-  gulp.src('js/app.js')
-    .pipe(browserify({
-      insertGlobals: true,
-      transform: ['hbsfy']
-    }))
-    .pipe(concat('app.js'))
-    .pipe(gulp.dest('./public/js'));
-});
-```
 
 ## Changelog
 
@@ -108,5 +93,3 @@ gulp.task('js', function() {
 [Handlebars]: http://handlebarsjs.com/
 [Browserify]: https://github.com/substack/node-browserify
 [peer dependency]: http://blog.nodejs.org/2013/02/07/peer-dependencies/
-[gulp]: http://gulpjs.com/
-[gulp-browserify]: https://github.com/deepak1556/gulp-browserify
