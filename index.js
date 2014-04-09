@@ -3,6 +3,7 @@
 var through = require('through');
 var Handlebars = require("handlebars");
 
+var minify = false;
 var extensions = {
   hbs: 1,
   handlebar: 1,
@@ -18,6 +19,8 @@ function hbsfy(file) {
     buffer += chunk.toString();
   },
   function() {
+    if(minify) buffer = buffer.replace(/[\n\t\r]+/g, '');
+
     var js = Handlebars.precompile(buffer);
     // Compile only with the runtime dependency.
     var compiled = "// hbsfy compiled Handlebars template\n";
@@ -35,8 +38,10 @@ hbsfy.configure = function(opts) {
   opts.extensions.forEach(function(ext) {
     extensions[ext] = 1;
   });
+
+  if(opts.minify) minify = true;
+
   return hbsfy;
 };
 
 module.exports = hbsfy;
-
