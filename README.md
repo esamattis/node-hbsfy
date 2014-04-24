@@ -1,8 +1,6 @@
-[![Build Status](https://travis-ci.org/epeli/node-hbsfy.png?branch=master)](https://travis-ci.org/epeli/node-hbsfy)
+# hbsfy [![Build Status][travis-badge]][travis]
 
-# hbsfy
-
-[Handlebars][] precompiler plugin for [Browserify][] without magic.
+[Handlebars][handlebars] precompiler plugin for [Browserify][browserify] without magic.
 
 Compiles Handlebars templates to plain Javascript. The compiled templates only
 have one copy of the Handlebars runtime so they are lightweight and fast!
@@ -11,27 +9,51 @@ have one copy of the Handlebars runtime so they are lightweight and fast!
 
 Install hbsfy locally to your project:
 
-    npm install hbsfy
+```no-highlight
+npm install hbsfy --save-dev
+```
 
-Handlebars will be automatically installed as [peer dependency][].
+Handlebars will be automatically installed as a [peer dependency][peer-dep].
 
 Then use it as Browserify transform module with `-t`:
 
-    browserify -t hbsfy main.js > bundle.js
+```no-highlight
+browserify -t hbsfy main.js > bundle.js
+```
 
-where main.js can be like:
-
+where `main.js` can be like:
 
 ```javascript
 var template = require("./template.hbs");
 document.body.innerHTML = template({ name: "Epeli" });
 ```
 
-and template.hbs:
+and `template.hbs`:
 
-```html
+```hbs
 <h1>Hello {{name}}!</h1>
 ```
+
+### Specifying Options
+
+By default hbsfy uses the `package.json` in your project to set configuration options.
+
+```json
+{
+  "name": "my-project",
+  "browserify": {
+    "transform": ["hbsfy"]
+  },
+  "hbsfy": {
+    "extensions": ["html"],
+    "precompiler": "precompiler-module-name",
+    "compiler": "require('my-compiler') or window.compiler"
+  }
+}
+```
+
+All options are optional. By default `precompiler` is just `handlebars`, and `compiler` is `require('hbsfy/runtime')` which is just Handlebars.Runtime.
+These options will be used by normal usage, as well as programmatic usage. Using `hbsfy.configure` (see below) will override these options.
 
 ## Programmatic usage
 
@@ -90,6 +112,8 @@ Checkout the example folder for details.
   - Option to configure template extensions
 
 
-[Handlebars]: http://handlebarsjs.com/
-[Browserify]: https://github.com/substack/node-browserify
-[peer dependency]: http://blog.nodejs.org/2013/02/07/peer-dependencies/
+[travis]: https://travis-ci.org/epeli/node-hbsfy
+[travis-badge]: https://travis-ci.org/epeli/node-hbsfy.svg?branch=master
+[handlebars]: http://handlebarsjs.com/
+[browserify]: https://github.com/substack/node-browserify
+[peer-dep]: http://blog.nodejs.org/2013/02/07/peer-dependencies/

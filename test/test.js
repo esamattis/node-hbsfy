@@ -3,7 +3,9 @@
 var fs = require("fs");
 var assert = require("assert");
 
-var hbsfy = require("hbsfy");
+var hbsfy = require("hbsfy").configure({
+  extensions: ["hbs"]
+});
 var Handlebars = require("hbsfy/runtime");
 
 Handlebars.registerHelper("upcase", function(s) {
