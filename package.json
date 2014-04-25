@@ -22,6 +22,7 @@
   "author": "Esa-Matti Suuronen",
   "license": "MIT",
   "dependencies": {
+    "mothership": "~0.3.0",
     "through": "~2.3.4"
   },
   "peerDependencies": {

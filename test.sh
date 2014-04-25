@@ -7,4 +7,5 @@ npm link hbsfy
 node test.js
 node browserify_test.js
 node custom_extension_test.js
+node package_json_test.js
 
