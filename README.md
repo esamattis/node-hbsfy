@@ -13,14 +13,19 @@ Install hbsfy locally to your project:
 
     npm install hbsfy
 
-Handlebars will be automatically installed as [peer dependency][].
+You will also need Handlebars installed. Handlebars 1.x is officially supported
+for now:
+
+    npm install handlebars@1
+
+Although the alpha version of Handlebars 2.0 should also work. Just drop the
+`@1` to try it.
 
 Then use it as Browserify transform module with `-t`:
 
     browserify -t hbsfy main.js > bundle.js
 
 where main.js can be like:
-
 
 ```javascript
 var template = require("./template.hbs");
@@ -32,6 +37,13 @@ and template.hbs:
 ```html
 <h1>Hello {{name}}!</h1>
 ```
+
+## Options
+
+You can use `--extensions` or `-e` subarg option to configure custom extensions
+for the transform:
+
+    browserify -t [ hbsfy -e html,htm ] main.js > bundle.js
 
 ## Programmatic usage
 
@@ -74,6 +86,16 @@ Checkout the example folder for details.
 
 
 ## Changelog
+
+### 2.0.0
+
+  - Support Browserify [subargs](https://github.com/substack/node-browserify/blob/5cbf55a4397f300df69be574b59f3f30ac01b9c2/bin/advanced.txt#L81-L90)
+  - The `configure` method does not mutate the inner state of the  module
+    anymore
+    - Instead it returns a new transform function.
+  - Handlebars is not a peerDependency anymore
+    - It must be manually installed
+    - This relaxes completely the version binding of Handlebars - it is now possible to try Handlebars 2.0 alpha
 
 ### 1.3.0
 
