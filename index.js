@@ -1,15 +1,30 @@
 /*jshint node: true*/
 
-var through = require('through');
+var through = require("through");
 var Handlebars = require("handlebars");
 
-var extensions = {
-  hbs: 1,
-  handlebar: 1,
-  handlebars: 1
+var defaultExtensions = {
+  hbs: true,
+  handlebar: true,
+  handlebars: true
 };
 
-function hbsfy(file) {
+function hbsfy(file, opts) {
+  var extensions = defaultExtensions;
+
+  if (opts && opts.extensions) {
+    extensions = {};
+    if (typeof opts.extensions === "string") {
+      opts.extensions.split(",").filter(Boolean).forEach(function(ext) {
+        extensions[ext] = true;
+      });
+    }
+    else {
+      extensions = opts.extensions;
+    }
+  }
+
+
   if (!extensions[file.split(".").pop()]) return through();
 
   var buffer = "";
@@ -27,13 +42,13 @@ function hbsfy(file) {
     this.queue(null);
   });
 
-};
+}
 
 hbsfy.configure = function(opts) {
   if (!opts || !opts.extensions) return hbsfy;
-  extensions = {};
+  defaultExtensions = {};
   opts.extensions.forEach(function(ext) {
-    extensions[ext] = 1;
+    defaultExtensions[ext] = 1;
   });
   return hbsfy;
 };
