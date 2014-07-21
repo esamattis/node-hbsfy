@@ -33,6 +33,10 @@ function toExtensionsOb(arr) {
 function hbsfy(file, opts) {
   var extensions = defaultExtensions;
 
+  if (opts && opts.e) {
+    extensions = toExtensionsOb(opts.e);
+  }
+
   if (opts && opts.extensions) {
     extensions = toExtensionsOb(opts.extensions);
   }
