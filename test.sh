@@ -1,10 +1,18 @@
 #!/bin/sh
 
 set -eu
+set -x
+
+# Make require("hbsfy") work
+if [ ! -h node_modules/hbsfy ]; then
+    rm -rf node_modules/hbsfy
+    ln -fs .. node_modules/hbsfy
+fi
 
 cd test/
-npm link hbsfy
-node test.js
-node browserify_test.js
-node custom_extension_test.js
+
+for test_file in *test.js
+do
+    node "$test_file"
+done
 
