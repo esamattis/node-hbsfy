@@ -10,7 +10,7 @@ var defaultExtensions = {
   handlebars: true
 };
 
-// Convert string or array of extensions to a object
+// Convert string or array of extensions to an object
 function toExtensionsOb(arr) {
   var ob = {};
 
