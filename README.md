@@ -99,6 +99,10 @@ Checkout the example folder for details.
 
 ## Changelog
 
+### 2.1.0
+
+  - Subargs options for alternate precompilers and compilers [31](https://github.com/epeli/node-hbsfy/pull/31)
+
 ### 2.0.0
 
   - Support Browserify [subargs](https://github.com/substack/node-browserify/blob/5cbf55a4397f300df69be574b59f3f30ac01b9c2/bin/advanced.txt#L81-L90)
