@@ -40,10 +40,22 @@ and template.hbs:
 
 ## Options
 
+### Custom Extension
+
 You can use `--extensions` or `-e` subarg option to configure custom extensions
 for the transform:
 
     browserify -t [ hbsfy -e html,htm ] main.js > bundle.js
+
+### Alternate Precompiler/Compiler
+
+You can specify how the templates are precompiled by using `-p` or `--precompiler`, which
+might also be used with the `-c` or `--compiler` option, like so:
+
+    browserify -t [ hbsfy -p ember-template-compiler -c Ember.Handlebars ] main.js > bundle.js
+
+By default the precompiler is the [handlebars](https://www.npmjs.org/package/handlebars) node module
+and the compiler is `"require('hbsfy/runtime')"`.
 
 ## Programmatic usage
 
