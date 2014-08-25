@@ -1,14 +1,16 @@
 /*jshint node: true*/
 
 var through = require("through");
-var Handlebars = require("handlebars");
 var xtend = require("xtend");
 
+var defaultPrecompiler = require("handlebars");
+var defaultCompiler = "require('hbsfy/runtime')";
 var defaultExtensions = {
   hbs: true,
   handlebar: true,
   handlebars: true
 };
+
 
 // Convert string or array of extensions to an object
 function toExtensionsOb(arr) {
@@ -32,13 +34,25 @@ function toExtensionsOb(arr) {
 
 function hbsfy(file, opts) {
   var extensions = defaultExtensions;
+  var compiler = defaultCompiler;
+  var precompiler = defaultPrecompiler;
 
-  if (opts && opts.e) {
-    extensions = toExtensionsOb(opts.e);
-  }
+  if (opts) {
+    if (opts.e || opts.extensions) {
+      extensions = toExtensionsOb(opts.e || opts.extensions);
+    }
 
-  if (opts && opts.extensions) {
-    extensions = toExtensionsOb(opts.extensions);
+    if (opts.p || opts.precompiler) {
+      try {
+        precompiler = require(opts.p || opts.precompiler);
+      } catch (e) {
+        throw e;
+      }
+    }
+
+    if (opts.c || opts.compiler) {
+      compiler = opts.c || opts.compiler;  
+    }
   }
 
   if (!extensions[file.split(".").pop()]) return through();
@@ -49,15 +63,14 @@ function hbsfy(file, opts) {
     buffer += chunk.toString();
   },
   function() {
-    var js = Handlebars.precompile(buffer);
+    var js = precompiler.precompile(buffer);
     // Compile only with the runtime dependency.
     var compiled = "// hbsfy compiled Handlebars template\n";
-    compiled += "var Handlebars = require('hbsfy/runtime');\n";
-    compiled += "module.exports = Handlebars.template(" + js.toString() + ");\n";
+    compiled += "var HandlebarsCompiler = " + compiler + ";\n";
+    compiled += "module.exports = HandlebarsCompiler.template(" + js.toString() + ");\n";
     this.queue(compiled);
     this.queue(null);
   });
-
 }
 
 // Return new hbsfy transform with custom default options
