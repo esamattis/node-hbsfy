@@ -43,11 +43,7 @@ function hbsfy(file, opts) {
     }
 
     if (opts.p || opts.precompiler) {
-      try {
-        precompiler = require(opts.p || opts.precompiler);
-      } catch (e) {
-        throw e;
-      }
+      precompiler = require(opts.p || opts.precompiler);
     }
 
     if (opts.c || opts.compiler) {
