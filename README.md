@@ -57,10 +57,31 @@ might also be used with the `-c` or `--compiler` option, like so:
 By default the precompiler is the [handlebars](https://www.npmjs.org/package/handlebars) node module
 and the compiler is `"require('hbsfy/runtime')"`.
 
+## package.json
+
+Transform can be configured from the package.json too.
+
+```json
+{
+  "browserify": {
+    "transform": [
+      ["hbsfy", { "extensions": ["html"] }]
+    ]
+  }
+}
+```
+
+The `precompiler` and `compiler` keys are naturally available too.
+
+See [module-deps
+documentation](https://github.com/substack/module-deps#packagejson-transformkey)
+for more information as this feature is implemented there (it's a part of
+Browserify itself).
+
 ## Programmatic usage
 
-When compiling using Javascript code custom extensions
-can be set:
+The `configure` method of the transform can be used to create new transforms
+with different defaults.
 
 ```javascript
 var hbsfy = require("hbsfy").configure({
