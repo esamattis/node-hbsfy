@@ -47,7 +47,7 @@ function hbsfy(file, opts) {
     }
 
     if (opts.c || opts.compiler) {
-      compiler = opts.c || opts.compiler;  
+      compiler = opts.c || opts.compiler;
     }
   }
 
@@ -59,7 +59,7 @@ function hbsfy(file, opts) {
     buffer += chunk.toString();
   },
   function() {
-    var js = precompiler.precompile(buffer);
+    var js = precompiler.precompile(buffer, opts && opts.precompilerOptions);
     // Compile only with the runtime dependency.
     var compiled = "// hbsfy compiled Handlebars template\n";
     compiled += "var HandlebarsCompiler = " + compiler + ";\n";
