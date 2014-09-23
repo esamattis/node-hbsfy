@@ -63,7 +63,7 @@ Example:
 
 Enable `myUltimateHelper` only
 
-    browserify --precompilerOptions [ --knownHelpersOnly --knownHelpers [ --myUltimateHelper ] ]  main.js > bundle.js
+    browserify -t [ hbsfy --precompilerOptions [ --knownHelpersOnly --knownHelpers [ --myUltimateHelper ] ] ]  main.js > bundle.js
 
 See [Handlebars API reference](http://handlebarsjs.com/reference.html) for
 details.
@@ -76,15 +76,19 @@ Transform can be configured from the package.json too.
 {
   "browserify": {
     "transform": [
-      ["hbsfy", {
-        "extensions": ["html"]
-        "precompilerOptions": {
-          "knownHelpersOnly": true,
-          "knownHelpers": {
-            "myUltimateHelper": true
+      [
+        "hbsfy",
+        {
+          "extensions": [
+            "html"
+          ],
+          "precompilerOptions": {
+            "knownHelpersOnly": true,
+            "knownHelpers": {
+              "myUltimateHelper": true
+            }
           }
         }
-      }
       ]
     ]
   }
