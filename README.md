@@ -57,6 +57,17 @@ might also be used with the `-c` or `--compiler` option, like so:
 By default the precompiler is the [handlebars](https://www.npmjs.org/package/handlebars) node module
 and the compiler is `"require('hbsfy/runtime')"`.
 
+Options for the precompiler can be passed using a `precompilerOptions` key.
+
+Example:
+
+Enable `myUltimateHelper` only
+
+    browserify --precompilerOptions [ --knownHelpersOnly --knownHelpers [ --myUltimateHelper ] ]  main.js > bundle.js
+
+See [Handlebars API reference](http://handlebarsjs.com/reference.html) for
+details.
+
 ## package.json
 
 Transform can be configured from the package.json too.
@@ -65,7 +76,16 @@ Transform can be configured from the package.json too.
 {
   "browserify": {
     "transform": [
-      ["hbsfy", { "extensions": ["html"] }]
+      ["hbsfy", {
+        "extensions": ["html"]
+        "precompilerOptions": {
+          "knownHelpersOnly": true,
+          "knownHelpers": {
+            "myUltimateHelper": true
+          }
+        }
+      }
+      ]
     ]
   }
 }
