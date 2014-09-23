@@ -140,9 +140,13 @@ Checkout the example folder for details.
 
 ## Changelog
 
+### 2.2.0
+
+  - Support for compiler options [#29](https://github.com/epeli/node-hbsfy/pull/29)
+
 ### 2.1.0
 
-  - Subargs options for alternate precompilers and compilers [31](https://github.com/epeli/node-hbsfy/pull/31)
+  - Subargs options for alternate precompilers and compilers [#31](https://github.com/epeli/node-hbsfy/pull/31)
 
 ### 2.0.0
 
