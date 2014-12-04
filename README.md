@@ -144,6 +144,10 @@ Checkout the example folder for details.
 
 ## Changelog
 
+### 2.2.1
+
+  - Emit compile errors instead of crashing. [#38](https://github.com/epeli/node-hbsfy/pull/38)
+
 ### 2.2.0
 
   - Support for compiler options [#29](https://github.com/epeli/node-hbsfy/pull/29)
