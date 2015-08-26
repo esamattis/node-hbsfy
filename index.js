@@ -60,6 +60,11 @@ function hbsfy(file, opts) {
   },
   function() {
     var js;
+
+    if (opts && (opts.b || opts.bom) && buffer.indexOf('﻿') === 0) {
+      buffer = buffer.substring(1);
+    }
+
     try {
       js = precompiler.precompile(buffer, opts && opts.precompilerOptions);
     } catch (e) {
