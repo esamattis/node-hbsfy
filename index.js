@@ -5,12 +5,36 @@ var xtend = require("xtend");
 
 var defaultPrecompiler = require("handlebars");
 var defaultCompiler = "require('hbsfy/runtime')";
+var defaultTraverse = false;
 var defaultExtensions = {
   hbs: true,
   handlebar: true,
   handlebars: true
 };
 
+function findPartials(tree) {
+  var partials = [];
+  hbTraverse(tree, function(node) {
+    if (node.type === 'partial') {
+      partials.push(node.partialName);
+    }
+  });
+  return partials;
+}
+
+function hbTraverse(node, action) {
+  if (Array.isArray(node)) {
+    return node.forEach(function(v) {
+      hbTraverse(v, action);
+    });
+  }
+  if (typeof node === 'object') {
+    action(node);
+    return Object.keys(node).forEach(function(k) {
+      hbTraverse(node[k], action);
+    })
+  }
+}
 
 // Convert string or array of extensions to an object
 function toExtensionsOb(arr) {
@@ -36,6 +60,7 @@ function hbsfy(file, opts) {
   var extensions = defaultExtensions;
   var compiler = defaultCompiler;
   var precompiler = defaultPrecompiler;
+  var traverse = defaultTraverse;
 
   if (opts) {
     if (opts.e || opts.extensions) {
@@ -49,6 +74,10 @@ function hbsfy(file, opts) {
     if (opts.c || opts.compiler) {
       compiler = opts.c || opts.compiler;
     }
+
+    if (opts.t || opts.traverse) {
+      traverse = opts.t || opts.traverse;
+    }
   }
 
   if (!extensions[file.split(".").pop()]) return through();
@@ -60,15 +89,33 @@ function hbsfy(file, opts) {
   },
   function() {
     var js;
+    var compiled = "// hbsfy compiled Handlebars template\n";
+    var parsed = null;
+    var partials = null;
+
     try {
+      if (traverse) {
+        parsed = precompiler.parse(buffer);
+        partials = findPartials(parsed);
+      }
+
       js = precompiler.precompile(buffer, opts && opts.precompilerOptions);
     } catch (e) {
       this.emit('error', e);
       return this.queue(null);
     }
+
     // Compile only with the runtime dependency.
-    var compiled = "// hbsfy compiled Handlebars template\n";
     compiled += "var HandlebarsCompiler = " + compiler + ";\n";
+
+    if (partials && partials.length) {
+      partials.forEach(function(p, i) {
+        var ident = "partial$" + i;
+        compiled += "var " + ident + " = require('" + p.name + "');\n";
+        compiled += "HandlebarsCompiler.registerPartial('" + p.name + "', " + ident + ");\n";
+      });
+    }
+
     compiled += "module.exports = HandlebarsCompiler.template(" + js.toString() + ");\n";
     this.queue(compiled);
     this.queue(null);
