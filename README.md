@@ -164,6 +164,10 @@ Note: if using the `--traverse` option, partial registration is automatic.
 
 ## Changelog
 
+### 2.3.0
+
+  - Allow resolving / requiring partials using node's module resolution algorithm (`--traverse`). [#47](https://github.com/epeli/node-hbsfy/pull/47)
+
 ### 2.2.1
 
   - Emit compile errors instead of crashing. [#38](https://github.com/epeli/node-hbsfy/pull/38)
