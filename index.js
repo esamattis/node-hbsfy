@@ -28,7 +28,7 @@ function hbTraverse(node, action) {
       hbTraverse(v, action);
     });
   }
-  if (typeof node === 'object') {
+  if (node && typeof node === 'object') {
     action(node);
     return Object.keys(node).forEach(function(k) {
       hbTraverse(node[k], action);
