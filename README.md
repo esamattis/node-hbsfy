@@ -164,6 +164,10 @@ Note: if using the `--traverse` option, partial registration is automatic.
 
 ## Changelog
 
+### 2.3.1
+
+  - Handle `null` nodes when traversing Handlebars AST.
+
 ### 2.3.0
 
   - Allow resolving / requiring partials using node's module resolution algorithm (`--traverse`). [#47](https://github.com/epeli/node-hbsfy/pull/47)
