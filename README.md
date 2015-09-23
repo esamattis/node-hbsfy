@@ -68,6 +68,24 @@ Enable `myUltimateHelper` only
 See [Handlebars API reference](http://handlebarsjs.com/reference.html) for
 details.
 
+### Common JS Partial Resolution
+
+Using the `--traverse` or `-t` option will cause partials to be resolved using node's [module resolution algorithm](https://nodejs.org/docs/latest/api/modules.html#modules_all_together). Be sure to prefix relative paths with `./` or `../` as needed. Otherwise the algorithm assumes a node_module is being referenced.
+
+Example:
+
+    browserify -t [ hbsfy -t ] main.js > bundle.js
+
+```html
+<!-- main.hbs -->
+<div>{{> ./path/to/partial.hbs }}</div>
+```
+
+```html
+<!-- path/to/partial.hbs -->
+<p>I'm a partial</p>
+```
+
 ## package.json
 
 Transform can be configured from the package.json too.
@@ -141,8 +159,18 @@ Handlebars.registerPartial('link', require("./partial.hbs"));
 
 Checkout the example folder for details.
 
+Note: if using the `--traverse` option, partial registration is automatic.
+
 
 ## Changelog
+
+### 2.3.1
+
+  - Handle `null` nodes when traversing Handlebars AST.
+
+### 2.3.0
+
+  - Allow resolving / requiring partials using node's module resolution algorithm (`--traverse`). [#47](https://github.com/epeli/node-hbsfy/pull/47)
 
 ### 2.2.1
 
@@ -159,7 +187,7 @@ Checkout the example folder for details.
 ### 2.0.0
 
   - Support Browserify [subargs](https://github.com/substack/node-browserify/blob/5cbf55a4397f300df69be574b59f3f30ac01b9c2/bin/advanced.txt#L81-L90)
-  - The `configure` method does not mutate the inner state of the  module
+  - The `configure` method does not mutate the inner state of the module
     anymore
     - Instead it returns a new transform function.
   - Handlebars is not a peerDependency anymore
