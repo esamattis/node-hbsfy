@@ -164,6 +164,10 @@ Note: if using the `--traverse` option, partial registration is automatic.
 
 ## Changelog
 
+### 2.4.0
+
+  - support handlebars 2, 3, 4
+
 ### 2.3.1
 
   - Handle `null` nodes when traversing Handlebars AST.
