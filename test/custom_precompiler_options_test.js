@@ -8,10 +8,15 @@ var templatePath = __dirname + "/hello.hbs";
 fs.createReadStream(templatePath)
   .pipe(hbsfy(templatePath))
   .pipe(concat(function(data) {
-    assert(
-      /helperMissing\.call/.test(data.toString()),
-      "The helperMissing call is present"
-    );
+
+    // module.exports = template
+    eval(data);
+    try {
+      module.exports();
+    } catch (e) {
+      assert(e.message.indexOf('Missing helper') > -1, 'Missing helper error');
+      assert(e.message.indexOf('upcase' > -1), 'missing helper is named');
+    }
   }));
 
 //actually check that the options were sent
@@ -26,8 +31,13 @@ fs.createReadStream(templatePath)
     }
   }))
   .pipe(concat(function(data) {
-    assert(
-      !/helperMissing\.call/.test(data.toString()),
-      "The helperMissing call should not be present"
-    );
+
+    // module.exports = template
+    eval(data);
+    try {
+      module.exports();
+    } catch (e) {
+      assert.equal(e.message,
+        'Cannot read property \'call\' of undefined');
+    }
   }));

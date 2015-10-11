@@ -15,8 +15,15 @@ var defaultExtensions = {
 function findPartials(tree) {
   var partials = [];
   hbTraverse(tree, function(node) {
+    // handlebars 3,4
+    if (node.type === 'PartialStatement') {
+      partials.push(node.name.original);
+      return
+    }
+    // handlebars 2
     if (node.type === 'partial') {
-      partials.push(node.partialName);
+      partials.push(node.partialName.name);
+      return;
     }
   });
   return partials;
@@ -62,6 +69,8 @@ function hbsfy(file, opts) {
   var precompiler = defaultPrecompiler;
   var traverse = defaultTraverse;
 
+  opts = opts || {};
+
   if (opts) {
     if (opts.e || opts.extensions) {
       extensions = toExtensionsOb(opts.e || opts.extensions);
@@ -99,7 +108,7 @@ function hbsfy(file, opts) {
         partials = findPartials(parsed);
       }
 
-      js = precompiler.precompile(buffer, opts && opts.precompilerOptions);
+      js = precompiler.precompile(buffer, opts.precompilerOptions);
     } catch (e) {
       this.emit('error', e);
       return this.queue(null);
@@ -111,8 +120,8 @@ function hbsfy(file, opts) {
     if (partials && partials.length) {
       partials.forEach(function(p, i) {
         var ident = "partial$" + i;
-        compiled += "var " + ident + " = require('" + p.name + "');\n";
-        compiled += "HandlebarsCompiler.registerPartial('" + p.name + "', " + ident + ");\n";
+        compiled += "var " + ident + " = require('" + p + "');\n";
+        compiled += "HandlebarsCompiler.registerPartial('" + p + "', " + ident + ");\n";
       });
     }
 

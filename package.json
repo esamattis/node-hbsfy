@@ -27,7 +27,7 @@
   "devDependencies": {
     "browserify": "~4.2.3",
     "concat-stream": "~1.4.1",
-    "ember-template-compiler": "^1.6.1",
-    "handlebars": "~1.3.0"
+    "ember-template-compiler": "github:toranb/ember-template-compiler#b924608f",
+    "handlebars": "^4"
   }
 }
