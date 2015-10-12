@@ -10,6 +10,7 @@ var templatePath = __dirname + "/custom_pre_compiler.hbs";
 fs.createReadStream(templatePath)
 .pipe(hbsfy(templatePath, { compiler: "Ember.Handlebars" }))
 .pipe(concat(function(data) {
+  console.log(data.toString())
   assert(
     /hbsfy compiled Handlebars template/.test(data.toString()),
     "The template should be compiled"

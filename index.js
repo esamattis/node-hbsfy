@@ -1,7 +1,13 @@
 /*jshint node: true*/
 
+var path = require("path");
 var through = require("through");
 var xtend = require("xtend");
+var SourceMap = require('source-map');
+var convertSourceMap = require('convert-source-map');
+
+var SourceMapConsumer = SourceMap.SourceMapConsumer;
+var SourceNode = SourceMap.SourceNode;
 
 var defaultPrecompiler = require("handlebars");
 var defaultCompiler = "require('hbsfy/runtime')";
@@ -71,23 +77,29 @@ function hbsfy(file, opts) {
 
   opts = opts || {};
 
-  if (opts) {
-    if (opts.e || opts.extensions) {
-      extensions = toExtensionsOb(opts.e || opts.extensions);
-    }
-
-    if (opts.p || opts.precompiler) {
-      precompiler = require(opts.p || opts.precompiler);
-    }
-
-    if (opts.c || opts.compiler) {
-      compiler = opts.c || opts.compiler;
-    }
-
-    if (opts.t || opts.traverse) {
-      traverse = opts.t || opts.traverse;
-    }
+  if (opts.e || opts.extensions) {
+    extensions = toExtensionsOb(opts.e || opts.extensions);
   }
+
+  if (opts.p || opts.precompiler) {
+    precompiler = require(opts.p || opts.precompiler);
+  }
+
+  if (opts.c || opts.compiler) {
+    compiler = opts.c || opts.compiler;
+  }
+
+  if (opts.t || opts.traverse) {
+    traverse = opts.t || opts.traverse;
+  }
+
+  var relativeFilePath = path.relative(process.cwd(), file);
+
+  // ember-template-compiler needs false as a second param.
+  opts.precompilerOptions = opts.precompilerOptions !== false && xtend({
+    destName: file,//relativeFilePath,
+    srcName: file//relativeFilePath
+  }, opts.precompilerOptions);
 
   if (!extensions[file.split(".").pop()]) return through();
 
@@ -98,7 +110,7 @@ function hbsfy(file, opts) {
   },
   function() {
     var js;
-    var compiled = "// hbsfy compiled Handlebars template\n";
+    var output = new SourceNode();
     var parsed = null;
     var partials = null;
 
@@ -114,19 +126,37 @@ function hbsfy(file, opts) {
       return this.queue(null);
     }
 
+    output.add("// hbsfy compiled Handlebars template\n");
+
     // Compile only with the runtime dependency.
-    compiled += "var HandlebarsCompiler = " + compiler + ";\n";
+    output.add("var HandlebarsCompiler = " + compiler + ";\n");
 
     if (partials && partials.length) {
       partials.forEach(function(p, i) {
         var ident = "partial$" + i;
-        compiled += "var " + ident + " = require('" + p + "');\n";
-        compiled += "HandlebarsCompiler.registerPartial('" + p + "', " + ident + ");\n";
+        output.add("var " + ident + " = require('" + p + "');\n");
+        output.add("HandlebarsCompiler.registerPartial('" + p + "', " + ident + ");\n");
       });
     }
 
-    compiled += "module.exports = HandlebarsCompiler.template(" + js.toString() + ");\n";
-    this.queue(compiled);
+    // If precompilerOptions are false, then Handlebars will not generate an
+    // initial SourceNode.
+    if (opts.precompilerOptions) {
+      var consumer = new SourceMapConsumer(js.map);
+      var precompiled = SourceNode.fromStringWithSourceMap(js.code, consumer);
+    }
+
+    output.add(["module.exports = HandlebarsCompiler.template(", precompiled, ");\n"]);
+
+    var mapped = output.toStringWithSourceMap();
+    mapped.map = mapped.map + '';
+    var chunk = mapped.code
+      + convertSourceMap.fromObject(mapped.map).toComment()
+      + '\n';
+
+    console.error(chunk);
+
+    this.queue(chunk);
     this.queue(null);
   });
 }

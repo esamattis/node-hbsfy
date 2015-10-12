@@ -21,6 +21,7 @@
   "author": "Esa-Matti Suuronen",
   "license": "MIT",
   "dependencies": {
+    "source-map": "^0.5.1",
     "through": "~2.3.4",
     "xtend": "~3.0.0"
   },

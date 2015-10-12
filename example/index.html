@@ -2,7 +2,14 @@
 <html>
 <head>
   <title>hbsfy example with helpers and partials</title>
-  <script src="index-bundle.js"></script>
+  <script type="text/javascript">
+    require = function() {
+      return {
+        template: function() {}
+      }
+    }
+  </script>
+  <script src="link.js"></script>
 </head>
 <body></body>
 </html>
