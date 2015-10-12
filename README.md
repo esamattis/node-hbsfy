@@ -164,6 +164,10 @@ Note: if using the `--traverse` option, partial registration is automatic.
 
 ## Changelog
 
+### 2.4.1
+
+  - Always strip BOM [#18](https://github.com/epeli/node-hbsfy/pull/18), [#46](https://github.com/epeli/node-hbsfy/pull/46)
+
 ### 2.4.0
 
   - support handlebars 2, 3, 4
