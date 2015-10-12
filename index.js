@@ -101,10 +101,9 @@ function hbsfy(file, opts) {
     var compiled = "// hbsfy compiled Handlebars template\n";
     var parsed = null;
     var partials = null;
-    
-    if (opts && (opts.b || opts.bom) && buffer.indexOf('﻿') === 0) {
-      buffer = buffer.substring(1);
-    }
+
+    // Kill BOM
+    buffer = buffer.replace(/^\uFEFF/, '');
 
     try {
       if (traverse) {
