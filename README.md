@@ -11,15 +11,12 @@ have one copy of the Handlebars runtime so they are lightweight and fast!
 
 Install hbsfy locally to your project:
 
-    npm install hbsfy
+    npm install --save-dev hbsfy
 
-You will also need Handlebars installed. Handlebars 1.x is officially supported
-for now:
+You will also need Handlebars installed. Handlebars 1, 2, 3, and 4 are supported
+for now (use 4 for best results):
 
-    npm install handlebars@1
-
-Although the alpha version of Handlebars 2.0 should also work. Just drop the
-`@1` to try it.
+    npm install --save-dev handlebars
 
 Then use it as Browserify transform module with `-t`:
 
