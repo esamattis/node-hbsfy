@@ -63,7 +63,7 @@ function toExtensionsOb(arr) {
   return ob;
 }
 
-function hbsfy(file, opts) {
+function getOptions(opts) {
   var extensions = defaultExtensions;
   var compiler = defaultCompiler;
   var precompiler = defaultPrecompiler;
@@ -89,6 +89,54 @@ function hbsfy(file, opts) {
     }
   }
 
+  return xtend({}, opts, {
+    extensions: extensions,
+    precompiler: precompiler,
+    compiler: compiler,
+    traverse: traverse
+  });
+}
+
+function compile(file, opts) {
+  var options = getOptions(opts);
+  var compiler = options.compiler;
+  var precompiler = options.precompiler;
+  var traverse = options.traverse;
+
+  var js;
+  var compiled = "// hbsfy compiled Handlebars template\n";
+  var parsed = null;
+  var partials = null;
+
+  // Kill BOM
+  file = file.replace(/^\uFEFF/, '');
+
+  if (traverse) {
+    parsed = precompiler.parse(file);
+    partials = findPartials(parsed);
+  }
+
+  js = precompiler.precompile(file, options.precompilerOptions);
+
+  // Compile only with the runtime dependency.
+  compiled += "var HandlebarsCompiler = " + compiler + ";\n";
+
+  if (partials && partials.length) {
+    partials.forEach(function(p, i) {
+      var ident = "partial$" + i;
+      compiled += "var " + ident + " = require('" + p + "');\n";
+      compiled += "HandlebarsCompiler.registerPartial('" + p + "', " + ident + ");\n";
+    });
+  }
+
+  compiled += "module.exports = HandlebarsCompiler.template(" + js.toString() + ");\n";
+
+  return compiled;
+}
+
+function hbsfy(file, opts) {
+  var extensions = getOptions(opts).extensions;
+
   if (!extensions[file.split(".").pop()]) return through();
 
   var buffer = "";
@@ -97,38 +145,15 @@ function hbsfy(file, opts) {
     buffer += chunk.toString();
   },
   function() {
-    var js;
-    var compiled = "// hbsfy compiled Handlebars template\n";
-    var parsed = null;
-    var partials = null;
-
-    // Kill BOM
-    buffer = buffer.replace(/^\uFEFF/, '');
+    var compiled;
 
     try {
-      if (traverse) {
-        parsed = precompiler.parse(buffer);
-        partials = findPartials(parsed);
-      }
-
-      js = precompiler.precompile(buffer, opts.precompilerOptions);
+      compiled = compile(buffer, opts);
     } catch (e) {
       this.emit('error', e);
       return this.queue(null);
     }
 
-    // Compile only with the runtime dependency.
-    compiled += "var HandlebarsCompiler = " + compiler + ";\n";
-
-    if (partials && partials.length) {
-      partials.forEach(function(p, i) {
-        var ident = "partial$" + i;
-        compiled += "var " + ident + " = require('" + p + "');\n";
-        compiled += "HandlebarsCompiler.registerPartial('" + p + "', " + ident + ");\n";
-      });
-    }
-
-    compiled += "module.exports = HandlebarsCompiler.template(" + js.toString() + ");\n";
     this.queue(compiled);
     this.queue(null);
   });
@@ -141,5 +166,6 @@ hbsfy.configure = function(rootOpts) {
   };
 };
 
-module.exports = hbsfy;
-
+exports = module.exports = hbsfy;
+exports.findPartials = findPartials;
+exports.compile = compile;
