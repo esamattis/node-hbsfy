@@ -67,7 +67,7 @@ details.
 
 ### Common JS Partial Resolution
 
-Using the `--traverse` or `-t` option will cause partials to be resolved using node's [module resolution algorithm](https://nodejs.org/docs/latest/api/modules.html#modules_all_together). Be sure to prefix relative paths with `./` or `../` as needed. Otherwise the algorithm assumes a node_module is being referenced.
+Using the `--traverse` or `-t` option will cause partials to be resolved using node's [module resolution algorithm](https://nodejs.org/docs/latest/api/modules.html#modules_all_together). Be sure to prefix relative paths with `./` or `../` as needed. Otherwise the algorithm assumes a `node_module` is being referenced.
 
 Example:
 
@@ -135,7 +135,7 @@ b.bundle().pipe(fs.createWriteStream("./bundle.js"));
 
 ### Helpers
 
-To register custom helpers just require the runtime use and `registerHelper` to
+To register custom helpers, require the runtime and run `registerHelper` to
 create helper:
 
 ```javascript
@@ -158,8 +158,52 @@ Checkout the example folder for details.
 
 Note: if using the `--traverse` option, partial registration is automatic.
 
+### .compile
+
+This synchronous method can be used to enable all hsbfy functionality in another environment, such as node or a test runner (such as mocha).
+
+```js
+// mocha-hbs.js
+var fs = require("fs");
+var hbsfy = require("hbsfy");
+
+require.extensions['.hbs'] = function (module, filename) {
+  var file = fs.readFileSync(filename, "utf8");
+  var opts = { traverse: true };
+  return module._compile(hbsfy.compile(file, opts), filename);
+}
+```
+
+```sh
+$ mocha -r hbs:./mocha-hbs.js tests/
+```
+
+Remember to register your custom helpers as well! Ideally your templates themselves `require` your helpers and runtime, and call `registerHelper`. But if they don't, all helpers can be loaded at once as part of the require hook above:
+
+```js
+// mocha-hbs.js
+var fs = require("fs");
+var hbsfy = require("hbsfy");
+var runtime = require("hbsfy/runtime");
+var helpers = require("./path/to/my/exported/helpers");
+
+Object.keys(helpers).forEach(function (key) {
+  runtime.registerHelper(key, helpers[key]);
+});
+
+require.extensions['.hbs'] = function (module, filename) {
+  var file = fs.readFileSync(filename, "utf8");
+  var opts = { traverse: true };
+  return module._compile(hbsfy.compile(file, opts), filename);
+}
+```
+
 
 ## Changelog
+
+### 2.5.0
+
+  - Export `findPartials` and `compile` for use in utilities / test frameworks [#49](https://github.com/epeli/node-hbsfy/pull/49).
 
 ### 2.4.1
 
