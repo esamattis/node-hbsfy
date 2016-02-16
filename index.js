@@ -11,6 +11,9 @@ var defaultExtensions = {
   handlebar: true,
   handlebars: true
 };
+var defaultProcessContent = function(content) {
+  return content;
+}
 
 function findPartials(tree) {
   var partials = [];
@@ -68,6 +71,7 @@ function getOptions(opts) {
   var compiler = defaultCompiler;
   var precompiler = defaultPrecompiler;
   var traverse = defaultTraverse;
+  var processContent = defaultProcessContent;
 
   opts = opts || {};
 
@@ -87,13 +91,18 @@ function getOptions(opts) {
     if (opts.t || opts.traverse) {
       traverse = opts.t || opts.traverse;
     }
+
+    if (opts.pc || opts.processContent) {
+      processContent = opts.pc || opts.processContent;
+    }
   }
 
   return xtend({}, opts, {
     extensions: extensions,
     precompiler: precompiler,
     compiler: compiler,
-    traverse: traverse
+    traverse: traverse,
+    processContent: processContent
   });
 }
 
@@ -102,6 +111,7 @@ function compile(file, opts) {
   var compiler = options.compiler;
   var precompiler = options.precompiler;
   var traverse = options.traverse;
+  var processContent = options.processContent;
 
   var js;
   var compiled = "// hbsfy compiled Handlebars template\n";
@@ -110,6 +120,7 @@ function compile(file, opts) {
 
   // Kill BOM
   file = file.replace(/^\uFEFF/, '');
+  file = processContent(file);
 
   if (traverse) {
     parsed = precompiler.parse(file);
