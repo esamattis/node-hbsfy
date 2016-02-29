@@ -12,6 +12,8 @@ var defaultExtensions = {
   handlebars: true
 };
 
+var MARKER = "// hbsfy compiled Handlebars template\n";
+
 function findPartials(tree) {
   var partials = [];
   hbTraverse(tree, function(node) {
@@ -104,7 +106,7 @@ function compile(file, opts) {
   var traverse = options.traverse;
 
   var js;
-  var compiled = "// hbsfy compiled Handlebars template\n";
+  var compiled = MARKER;
   var parsed = null;
   var partials = null;
 
@@ -145,6 +147,14 @@ function hbsfy(file, opts) {
     buffer += chunk.toString();
   },
   function() {
+
+    // Pass through if already compiled.
+    if (buffer.indexOf(MARKER) > -1) {
+      this.queue(buffer);
+      this.queue(null);
+      return;
+    }
+
     var compiled;
 
     try {
