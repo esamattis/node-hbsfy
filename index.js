@@ -11,6 +11,7 @@ var defaultExtensions = {
   handlebar: true,
   handlebars: true
 };
+var defaultPartialsExtension = '';
 
 var MARKER = "// hbsfy compiled Handlebars template\n";
 
@@ -70,7 +71,8 @@ function getOptions(opts) {
   var compiler = defaultCompiler;
   var precompiler = defaultPrecompiler;
   var traverse = defaultTraverse;
-
+  var partialsExtension = defaultPartialsExtension;
+  
   opts = opts || {};
 
   if (opts) {
@@ -89,13 +91,18 @@ function getOptions(opts) {
     if (opts.t || opts.traverse) {
       traverse = opts.t || opts.traverse;
     }
+    
+    if (opts.x || opts.partialsExtension) {
+      partialsExtension = opts.x || opts.partialsExtension;
+    }
   }
 
   return xtend({}, opts, {
     extensions: extensions,
     precompiler: precompiler,
     compiler: compiler,
-    traverse: traverse
+    traverse: traverse,
+    partialsExtension: partialsExtension,
   });
 }
 
@@ -104,6 +111,7 @@ function compile(file, opts) {
   var compiler = options.compiler;
   var precompiler = options.precompiler;
   var traverse = options.traverse;
+  var partialsExtension = options.partialsExtension ? "." + options.partialsExtension : "";
 
   var js;
   var compiled = MARKER;
@@ -125,8 +133,9 @@ function compile(file, opts) {
 
   if (partials && partials.length) {
     partials.forEach(function(p, i) {
-      var ident = "partial$" + i;
-      compiled += "var " + ident + " = require('" + p + "');\n";
+      var ident = "partial$" + i,
+        path = p + partialsExtension;
+      compiled += "var " + ident + " = require('" + path + "');\n";
       compiled += "HandlebarsCompiler.registerPartial('" + p + "', " + ident + ");\n";
     });
   }
