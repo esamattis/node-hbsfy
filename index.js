@@ -6,6 +6,8 @@ var xtend = require("xtend");
 var defaultPrecompiler = require("handlebars");
 var defaultCompiler = "require('hbsfy/runtime')";
 var defaultTraverse = false;
+var defaultPartialsExtension = '';
+var defaultBaseDir = '';
 var defaultExtensions = {
   hbs: true,
   handlebar: true,
@@ -70,7 +72,9 @@ function getOptions(opts) {
   var compiler = defaultCompiler;
   var precompiler = defaultPrecompiler;
   var traverse = defaultTraverse;
-
+  var partialsExtension = defaultPartialsExtension;
+  var baseDir = defaultBaseDir;
+  
   opts = opts || {};
 
   if (opts) {
@@ -89,13 +93,23 @@ function getOptions(opts) {
     if (opts.t || opts.traverse) {
       traverse = opts.t || opts.traverse;
     }
+    
+    if (opts.x || opts.partialsExtension) {
+      partialsExtension = "." + (opts.x || opts.partialsExtension);
+    }
+    
+    if (opts.b || opts.baseDir) {
+      baseDir = opts.b || opts.baseDir;
+    }
   }
 
   return xtend({}, opts, {
     extensions: extensions,
     precompiler: precompiler,
     compiler: compiler,
-    traverse: traverse
+    traverse: traverse,
+    partialsExtension: partialsExtension,
+    baseDir: baseDir
   });
 }
 
@@ -104,6 +118,8 @@ function compile(file, opts) {
   var compiler = options.compiler;
   var precompiler = options.precompiler;
   var traverse = options.traverse;
+  var partialsExtension = options.partialsExtension;
+  var baseDir = options.baseDir;
 
   var js;
   var compiled = MARKER;
@@ -125,8 +141,9 @@ function compile(file, opts) {
 
   if (partials && partials.length) {
     partials.forEach(function(p, i) {
-      var ident = "partial$" + i;
-      compiled += "var " + ident + " = require('" + p + "');\n";
+      var ident = "partial$" + i,
+        partialPath = baseDir + p + partialsExtension;
+      compiled += "var " + ident + " = require('" + partialPath + "');\n";
       compiled += "HandlebarsCompiler.registerPartial('" + p + "', " + ident + ");\n";
     });
   }
