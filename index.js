@@ -142,8 +142,8 @@ function compile(file, opts) {
   if (partials && partials.length) {
     partials.forEach(function(p, i) {
       var ident = "partial$" + i,
-        path = p + partialsExtension;
-      compiled += "var " + ident + " = require('" + baseDir + path + partialsExtension + "');\n";
+        partialPath = baseDir + p + partialsExtension;
+      compiled += "var " + ident + " = require('" + partialPath + "');\n";
       compiled += "HandlebarsCompiler.registerPartial('" + p + "', " + ident + ");\n";
     });
   }
