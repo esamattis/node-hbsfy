@@ -214,6 +214,10 @@ hbsfy.configure({
 
 ## Changelog
 
+### 2.6.0
+
+  - Add `processContent` option. [#50](https://github.com/epeli/node-hbsfy/pull/50)
+
 ### 2.5.0
 
   - Export `findPartials` and `compile` for use in utilities / test frameworks [#49](https://github.com/epeli/node-hbsfy/pull/49).
