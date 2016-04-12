@@ -83,6 +83,21 @@ Example:
 <p>I'm a partial</p>
 ```
 
+## Inline Partials
+
+If you are using Handlebars 4.0.0 or later, you can still use inline partials. To denote a usage of an inline partial (and not a node_module dependency) just add 'inline:' to the beginning of the partial reference.
+
+Example:
+```html
+{{#*inline "myPartial"}}
+  My Content
+{{/inline}}
+{{#each children}}
+  {{> inline:myPartial}}
+{{/each}}
+```
+
+
 ## package.json
 
 Transform can be configured from the package.json too.

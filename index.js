@@ -136,9 +136,11 @@ function compile(file, opts) {
 
   if (partials && partials.length) {
     partials.forEach(function(p, i) {
-      var ident = "partial$" + i;
-      compiled += "var " + ident + " = require('" + p + "');\n";
-      compiled += "HandlebarsCompiler.registerPartial('" + p + "', " + ident + ");\n";
+      if (i.indexOf('inline:') !== 0) {
+        var ident = "partial$" + i;
+        compiled += "var " + ident + " = require('" + p + "');\n";
+        compiled += "HandlebarsCompiler.registerPartial('" + p + "', " + ident + ");\n";
+      }
     });
   }
 
