@@ -85,11 +85,11 @@ Example:
 
 ## Inline Partials
 
-If you are using Handlebars 4.0.0 or later, you can still use inline partials. To denote a usage of an inline partial (and not a node_module dependency) just add 'inline:' to the beginning of the partial reference.
+If you are using Common JS partial resolution (setting the `--traverse` flag) and you are using Handlebars 4.0.0 or later, you can still use inline partials. To denote a usage of an inline partial (and not a node_module dependency) just add 'inline:' to the beginning of the partial name and reference.
 
 Example:
 ```html
-{{#*inline "myPartial"}}
+{{#*inline "inline:myPartial"}}
   My Content
 {{/inline}}
 {{#each children}}

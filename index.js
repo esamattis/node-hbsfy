@@ -136,7 +136,7 @@ function compile(file, opts) {
 
   if (partials && partials.length) {
     partials.forEach(function(p, i) {
-      if (i.indexOf('inline:') !== 0) {
+      if (p.indexOf('inline:') !== 0) {
         var ident = "partial$" + i;
         compiled += "var " + ident + " = require('" + p + "');\n";
         compiled += "HandlebarsCompiler.registerPartial('" + p + "', " + ident + ");\n";
