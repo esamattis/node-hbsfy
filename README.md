@@ -85,17 +85,7 @@ Example:
 
 ## Inline Partials
 
-If you are using Common JS partial resolution (setting the `--traverse` flag) and you are using Handlebars 4.0.0 or later, you can still use inline partials. To denote a usage of an inline partial (and not a node_module dependency) just add 'inline:' to the beginning of the partial name and reference.
-
-Example:
-```html
-{{#*inline "inline:myPartial"}}
-  My Content
-{{/inline}}
-{{#each children}}
-  {{> inline:myPartial}}
-{{/each}}
-```
+If you are using Common JS partial resolution (setting the `--traverse` flag) and you are using Handlebars 4.0.0 or later, you can still use inline partials. Make sure to not use inline partial names that conflict with `node_module` dependencies. The inline partial will be used over a dependency reference.
 
 
 ## package.json
