@@ -4,10 +4,9 @@ var browserify = require("browserify");
 var assert = require("assert");
 var vm = require("vm");
 
-var b = browserify(__dirname + "/browsercode.js");
-b.transform(require("hbsfy"));
+var b = browserify(__dirname + "/inlinePartialBrowsercode.js");
+b.transform(require("hbsfy"), { traverse: true });
 
-// Browser mock
 var context = {
   document: {
     body: {}
@@ -15,11 +14,9 @@ var context = {
 };
 
 b.bundle().pipe(concat(function(data) {
-  assert(data.length < 35000, "Bundle is too big! Maybe full Handlebars got compiled in?");
   vm.runInNewContext(data.toString(), context);
 }));
 
 setTimeout(function() {
-  assert.equal(context.document.body.innerHTML.trim(), "<h1>HELLO</h1>");
+  assert.equal(context.document.body.innerHTML.trim(), "<p>Test</p>");
 }, 400);
-

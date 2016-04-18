@@ -17,11 +17,13 @@ var defaultProcessContent = function(content) {
 
 var MARKER = "// hbsfy compiled Handlebars template\n";
 
+var inlinePartials = {};
+
 function findPartials(tree) {
   var partials = [];
   hbTraverse(tree, function(node) {
     // handlebars 3,4
-    if (node.type === 'PartialStatement') {
+    if (node.type === 'PartialStatement' && !inlinePartials[node.name.original]) {
       partials.push(node.name.original);
       return
     }
@@ -35,6 +37,9 @@ function findPartials(tree) {
 }
 
 function hbTraverse(node, action) {
+  if (node && node.type == 'DecoratorBlock' && node.path.original == 'inline') {
+    inlinePartials[node.params[0].original] = true;
+  }
   if (Array.isArray(node)) {
     return node.forEach(function(v) {
       hbTraverse(v, action);

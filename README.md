@@ -83,6 +83,11 @@ Example:
 <p>I'm a partial</p>
 ```
 
+## Inline Partials
+
+If you are using Common JS partial resolution (setting the `--traverse` flag) and you are using Handlebars 4.0.0 or later, you can still use inline partials. Make sure to not use inline partial names that conflict with `node_module` dependencies. The inline partial will be used over a dependency reference.
+
+
 ## package.json
 
 Transform can be configured from the package.json too.
