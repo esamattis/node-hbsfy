@@ -9,9 +9,9 @@ b.transform(require("hbsfy"));
 
 // Browser mock
 var context = {
-    document: {
-        body: {}
-    }
+  document: {
+    body: {}
+  }
 };
 
 b.bundle().pipe(concat(function(data) {

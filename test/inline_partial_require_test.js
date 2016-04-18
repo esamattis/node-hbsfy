@@ -8,9 +8,9 @@ var b = browserify(__dirname + "/inlinePartialBrowsercode.js");
 b.transform(require("hbsfy"), { traverse: true });
 
 var context = {
-    document: {
-        body: {}
-    }
+  document: {
+    body: {}
+  }
 };
 
 b.bundle().pipe(concat(function(data) {
