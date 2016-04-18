@@ -15,11 +15,11 @@ var context = {
 };
 
 b.bundle().pipe(concat(function(data) {
-    assert(data.length < 35000, "Bundle is too big! Maybe full Handlebars got compiled in?");
-    vm.runInNewContext(data.toString(), context);
+  assert(data.length < 35000, "Bundle is too big! Maybe full Handlebars got compiled in?");
+  vm.runInNewContext(data.toString(), context);
 }));
 
 setTimeout(function() {
-    assert.equal(context.document.body.innerHTML.trim(), "<h1>HELLO</h1>");
+  assert.equal(context.document.body.innerHTML.trim(), "<h1>HELLO</h1>");
 }, 400);
 

@@ -14,9 +14,9 @@ var context = {
 };
 
 b.bundle().pipe(concat(function(data) {
-    vm.runInNewContext(data.toString(), context);
+  vm.runInNewContext(data.toString(), context);
 }));
 
 setTimeout(function() {
-    assert.equal(context.document.body.innerHTML.trim(), "<p>Test</p>");
+  assert.equal(context.document.body.innerHTML.trim(), "<p>Test</p>");
 }, 400);
