@@ -219,6 +219,14 @@ hbsfy.configure({
 
 ## Changelog
 
+### 2.8.0
+
+  - Support block partials, ignoring templates with `@` prefix. [#60](https://github.com/epeli/node-hbsfy/pull/60)
+
+### 2.7.0
+
+  - Allow inline partials when using `--traverse`. [#54](https://github.com/epeli/node-hbsfy/pull/54)
+
 ### 2.6.0
 
   - Add `processContent` option. [#50](https://github.com/epeli/node-hbsfy/pull/50)
