@@ -23,7 +23,7 @@ function findPartials(tree) {
   var partials = [];
   hbTraverse(tree, function(node) {
     // handlebars 3,4
-    if (node.type === 'PartialStatement' && !inlinePartials[node.name.original]) {
+    if ((node.type === 'PartialStatement' || node.type === 'PartialBlockStatement') && node.name.original.substr(0,1) !== "@" && !inlinePartials[node.name.original]) {
       partials.push(node.name.original);
       return
     }
