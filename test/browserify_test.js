@@ -14,9 +14,13 @@ var context = {
   }
 };
 
-b.bundle().pipe(concat(function(data) {
-  assert(data.length < 35000, "Bundle is too big! Maybe full Handlebars got compiled in?");
+b.bundle({ debug: false }).pipe(concat(function(data) {
+  // Browserify is not respecting the `debug` flag, so source maps
+  // are included, blowing up the size.
+  var stripped = data.toString('utf8').replace(/\/\/# sourceMappingURL.+/g, '');
+  assert(stripped.length < 35000, "Bundle is too big! Maybe full Handlebars got compiled in?");
   vm.runInNewContext(data.toString(), context);
+
 }));
 
 setTimeout(function() {
