@@ -219,6 +219,10 @@ hbsfy.configure({
 
 ## Changelog
 
+### 2.8.1
+
+  - Fix build due to source maps being included in bundle output.
+
 ### 2.8.0
 
   - Support block partials, ignoring templates with `@` prefix. [#60](https://github.com/epeli/node-hbsfy/pull/60)
