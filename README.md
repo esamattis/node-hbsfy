@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/epeli/node-hbsfy.png?branch=master)](https://travis-ci.org/epeli/node-hbsfy)
+[![Build Status](https://travis-ci.org/epeli/node-hbsfy.png?branch=master)](https://travis-ci.org/epeli/node-hbsfy) [![Greenkeeper badge](https://badges.greenkeeper.io/epeli/node-hbsfy.svg)](https://greenkeeper.io/)
 
 # hbsfy
 
