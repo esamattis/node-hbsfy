@@ -5,7 +5,7 @@
   "author": "",
   "dependencies": {
     "hbsfy": "",
-    "handlebars": "1",
+    "handlebars": "^4.0.12",
     "browserify": ""
   }
 }
